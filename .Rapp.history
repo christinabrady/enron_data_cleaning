@@ -1,46 +1,8 @@
-library(ReporteRs)
-?vanilla.table
-?kable
-library(slidify)
 setwd("Documents/presentations/R Ladies/Enron Series/")
-ls
 list.files()
 setwd("./data_into_shape/")
+ls
+list.files()
+library(slidify)
 slidify("index.Rmd")
-edges <- data.frame(name = c("Jane Doe", "John Doe"), email = c("jane.doe@enron.com", "john.doe@enron.com"))#
-links <- data.frame(to = c("jane.doe@enron.com", "princess.leia@enron.com", #
-                           from = c("john.doe@enron.com", "john.doe@enron.com"), #
-                           weights = c(4, 10)))
-edges
-links
-links <- data.frame(to = c("jane.doe@enron.com", "princess.leia@enron.com"), #
-                           from = c("john.doe@enron.com", "john.doe@enron.com"), #
-                           weights = c(4, 10))
-links
-?kable
-slidify("index.Rmd")
-slidify("index.Rmd")
-?flexTable
-?FlexTable
-slidify("index.Rmd")
-??setFlexTableWidths
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-?FlexTable
-?FlexTable
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
-adjacency
-slidify("index.Rmd")
-slidify("index.Rmd")
-slidify("index.Rmd")
+publish(user = "christinabrady", repo = "enron_data_cleaning")
