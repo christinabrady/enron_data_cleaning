@@ -1,0 +1,109 @@
+---
+title       : Enron Data Series 
+subtitle    : Get your data into shape
+author      : Christina Brady
+job         : Data Scientist, World Bank
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---&vcenter
+## Workshop Objectives:
+  
+1. Download Data
+2. Explore: Use a R to understand what data is here, what it looks like and how it is organized.
+3. Plan: Decide in which format we need the data in order to conduct analysis.
+4. Format: Get the data into that format.  
+
+--- &vcenter
+## Download the data  
+  
+  
+Download the data [here] (https://www.cs.cmu.edu/~./enron/).
+
+--- &vcenter
+## Explore  
+  
+  
+* How many folders are there?
+* What do they contain?
+* How many subfolders are there?
+* What format are the files in?
+* What kind of information do they contain? Is it consistent?
+
+--- &vcenter
+## Plan  
+  
+* Who writes to and receives email from whom? (Network analysis) 
+* Can we determine what topics are in the emails? (Text Analysis) 
+* Can we summarize the emails? (Text Analysis) 
+* Can we detect who is involved in fraud from their emails? (Classification)
+* Can we detect if a writer is male or female? (Classification)
+
+--- &vcenter
+## Format: Network Analysis (1/2)  
+For igraph and circlize, you need a dataframe of edges and a data frame of links that look like this:    
+###### Edges:
+```{r, echo = FALSE, fig.height= 2, fig.width=4}
+edges <- data.frame(name = c("Jane Doe", "John Doe"), email = c("jane.doe@enron.com", "john.doe@enron.com"))
+links <- data.frame(to = c("jane.doe@enron.com", "princess.leia@enron.com"), 
+                           from = c("john.doe@enron.com", "john.doe@enron.com"), 
+                           weights = c(4, 10))
+#suppressPackageStartupMessages(library(ReporteRs))
+#edgesft <- FlexTable(edges, body.par.props = parProperties(padding = 2), header.par.props = parProperties(padding = 2))
+#setFlexTableWidths(edgesft, rep(0.75, 2))
+edges
+```  
+###### Links:
+```{r, echo = FALSE}
+#linksft <- FlexTable(links, body.par.props = parProperties(padding = 2), header.par.props = parProperties(padding = 2))
+#setFlexTableWidths(linksft, rep(0.75, 3))
+links
+```  
+
+--- &vcenter
+## Format: Network Analysis (2/2)  
+For network analysis, we may also use an adjacency matrix, which looks like this:  
+```{r, echo = FALSE}
+adjacency <- data.frame(jane_doe = c(0, 1, 1), 
+                        princess_leia = c(1, 0, 0), 
+                        john_doe = c(2, 2, 1))
+rownames(adjacency) <- c("jane_doe", "princess_leia", "john_doe")
+adjacency
+```  
+
+--- &vcenter
+## Format: Text Analysis
+For topic modeling or to use the text in classification, we need our documents in a document term matrix (tm package).  
+
+```{r, echo = FALSE}
+dtm_ex <- data.frame(assign = c(1, 1, 1), 
+                     deal = c(1, 0, 0),
+                     financial = c(0, 1, 1),
+                     structure = c(0, 0, 0))
+row.names(dtm_ex) <- c("email_1", "email_2", "email_3")
+dtm_ex
+```  
+
+--- &vcenter
+## Format: Classification  
+For regression, trees, random forests, etc., we need a matrix of features.
+
+```{r, echo = FALSE}
+mexample <- data.frame(name = c("Jane Doe", "Princess Leia", "Han Solo"), 
+                       fraudster = c(1, 0, 1), 
+                       email_topic = c("football", "resistence", "Leia"), 
+                       ave_email_length = c(25, 10, 30))
+mexample
+```  
+
+
+--- &vcenter
+## Resources:
+- Quick igraph [example] (https://www.r-bloggers.com/an-example-of-social-network-analysis-with-r-using-package-igraph/). 
+- igraph [vignette] (http://www.kateto.net/wp-content/uploads/2016/01/NetSciX_2016_Workshop.pdf).
+- circlize vignette
+- tm package
+- topic models package

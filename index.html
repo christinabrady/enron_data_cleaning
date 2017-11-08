@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enron Data Series</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Enron Data Series">
+  <meta name="author" content="Christina Brady">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Enron Data Series</h1>
+    <h2>Get your data into shape</h2>
+    <p>Christina Brady<br/>Data Scientist, World Bank</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1">
+<hgroup>
+  <h2>Workshop Objectives:</h2>
+</hgroup>
+<article class = 'flexbox vcenter'>
+<ol>
+<li>Download Data</li>
+<li>Explore: Use a R to understand what data is here, what it looks like and how it is organized.</li>
+<li>Plan: Decide in which format we need the data in order to conduct analysis.</li>
+<li>Format: Get the data into that format.<br></li>
+</ol>
+
+</article>
+<!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-2">
+<hgroup>
+  <h2>Download the data</h2>
+</hgroup>
+<article class = 'flexbox vcenter'>
+<p>Download the data <a href="https://www.cs.cmu.edu/%7E./enron/">here</a>.</p>
+
+</article>
+<!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-3">
+<hgroup>
+  <h2>Explore</h2>
+</hgroup>
+<article class = 'flexbox vcenter'>
+<ul>
+<li>How many folders are there?</li>
+<li>What do they contain?</li>
+<li>How many subfolders are there?</li>
+<li>What format are the files in?</li>
+<li>What kind of information do they contain? Is it consistent?</li>
+</ul>
+
+</article>
+<!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-4">
+<hgroup>
+  <h2>Plan</h2>
+</hgroup>
+<article class = 'flexbox vcenter'>
+<ul>
+<li>Who writes to and receives email from whom? (Network analysis) </li>
+<li>Can we determine what topics are in the emails? (Text Analysis) </li>
+<li>Can we summarize the emails? (Text Analysis) </li>
+<li>Can we detect who is involved in fraud from their emails? (Classification)</li>
+<li>Can we detect if a writer is male or female? (Classification)</li>
+</ul>
+
+</article>
+<!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-5">
+<hgroup>
+  <h2>Format: Network Analysis (1/2)</h2>
+</hgroup>
+<article class = 'flexbox vcenter'>
+<p>For igraph and circlize, you need a dataframe of edges and a data frame of links that look like this:    </p>
+
+<h6>Edges:</h6>
+
+<pre><code>##       name              email
+## 1 Jane Doe jane.doe@enron.com
+## 2 John Doe john.doe@enron.com
+</code></pre>
+
+<h6>Links:</h6>
+
+<pre><code>##                        to               from weights
+## 1      jane.doe@enron.com john.doe@enron.com       4
+## 2 princess.leia@enron.com john.doe@enron.com      10
+</code></pre>
+
+</article>
+<!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-6">
+<hgroup>
+  <h2>Format: Network Analysis (2/2)</h2>
+</hgroup>
+<article class = 'flexbox vcenter'>
+<p>For network analysis, we may also use an adjacency matrix, which looks like this:  </p>
+
+<pre><code>##               jane_doe princess_leia john_doe
+## jane_doe             0             1        2
+## princess_leia        1             0        2
+## john_doe             1             0        1
+</code></pre>
+
+</article>
+<!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-7">
+<hgroup>
+  <h2>Format: Text Analysis</h2>
+</hgroup>
+<article class = 'flexbox vcenter'>
+<p>For topic modeling or to use the text in classification, we need our documents in a document term matrix (tm package).  </p>
+
+<pre><code>##         assign deal financial structure
+## email_1      1    1         0         0
+## email_2      1    0         1         0
+## email_3      1    0         1         0
+</code></pre>
+
+</article>
+<!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-8">
+<hgroup>
+  <h2>Format: Classification</h2>
+</hgroup>
+<article class = 'flexbox vcenter'>
+<p>For regression, trees, random forests, etc., we need a matrix of features.</p>
+
+<pre><code>##            name fraudster email_topic ave_email_length
+## 1      Jane Doe         1    football               25
+## 2 Princess Leia         0  resistence               10
+## 3      Han Solo         1        Leia               30
+</code></pre>
+
+</article>
+<!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-9">
+<hgroup>
+  <h2>Resources:</h2>
+</hgroup>
+<article class = 'flexbox vcenter'>
+<ul>
+<li>Quick igraph <a href="https://www.r-bloggers.com/an-example-of-social-network-analysis-with-r-using-package-igraph/">example</a>. </li>
+<li>igraph <a href="http://www.kateto.net/wp-content/uploads/2016/01/NetSciX_2016_Workshop.pdf">vignette</a>.</li>
+<li>circlize vignette</li>
+<li>tm package</li>
+<li>topic models package</li>
+</ul>
+
+</article>
+<!-- Presenter Notes -->
+</slide>
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Workshop Objectives:'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Download the data'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Explore'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Plan'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Format: Network Analysis (1/2)'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Format: Network Analysis (2/2)'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Format: Text Analysis'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Format: Classification'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Resources:'>
+         9
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
