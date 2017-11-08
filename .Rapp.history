@@ -1,8 +1,0 @@
-setwd("Documents/presentations/R Ladies/Enron Series/")
-list.files()
-setwd("./data_into_shape/")
-ls
-list.files()
-library(slidify)
-slidify("index.Rmd")
-publish(user = "christinabrady", repo = "enron_data_cleaning")
